@@ -404,15 +404,15 @@ namespace Chroma
 
 	// Write out the forward propagator header
 	push(XmlOut, "ForwardProp");
-	write(XmlOut, "PropFWDXML", PropFWDXML);
-	write(XmlOut, "PropFWDRecordXML", PropFWDRecordXML);
-	write(XmlOut, "PropFWDCheck", PropFWDCheck);
+	write(XmlOut, "PropFWDXML", PropXML);
+	write(XmlOut, "PropFWDRecordXML", PropRecordXML);
+	write(XmlOut, "PropFWDCheck", PropCheckFWD);
 	pop(XmlOut);
 	
 	  push(XmlOut, "BackwardProp");
 	  write(XmlOut, "PropBWDXML", PropBWDXML);
 	  write(XmlOut, "PropBWDRecordXML", PropBWDRecordXML);
-	  write(XmlOut, "PropBWDCheck", PropBWDCheck);
+	  write(XmlOut, "PropBWDCheck", PropCheckBWD);
 	  pop(XmlOut);
       }
     }
