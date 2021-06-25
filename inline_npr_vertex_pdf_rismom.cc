@@ -374,18 +374,21 @@ namespace Chroma
 		B = TheNamedObjMap::Instance().getData<LatticePropagator>(params.named_obj.prop_id_bwd);
 	
       // Snarf the frwd prop info. This is will throw if the frwd prop id is not there
-      XMLReader PropXML1, PropRecordXML1, PropXML2, PropRecordXML2 ;
-      TheNamedObjMap::Instance().get(params.named_obj.prop_id_fwd).getFileXML(PropXML1);
-      TheNamedObjMap::Instance().get(params.named_obj.prop_id_fwd).getRecordXML(PropRecordXML1);
-		TheNamedObjMap::Instance().get(params.named_obj.prop_id_bwd).getFileXML(PropXML2);
-  TheNamedObjMap::Instance().get(params.named_obj.prop_id_bwd).getRecordXML(PropRecordXML2);
+      XMLReader PropXML, PropRecordXML;
+      
 
       // Try to invert this record XML into a ChromaProp struct
       {
+  TheNamedObjMap::Instance().get(params.named_obj.prop_id_fwd).getFileXML(PropXML);
+  TheNamedObjMap::Instance().get(params.named_obj.prop_id_fwd).getRecordXML(PropRecordXML);
 	read(PropRecordXML, "/Propagator/ForwardProp", prop_header_fwd);
 	read(PropRecordXML, "/Propagator/PropSourceFWD", source_header_fwd);
-		  read(PropRecordXML, "/Propagator/ForwardProp", prop_header_bwd);
-		  read(PropRecordXML, "/Propagator/PropSourceBWD", source_header_bwd);
+
+		  
+	TheNamedObjMap::Instance().get(params.named_obj.prop_id_bwd).getFileXML(PropXML);
+	  TheNamedObjMap::Instance().get(params.named_obj.prop_id_bwd).getRecordXML(PropRecordXML);
+	  read(PropRecordXML, "/Propagator/ForwardProp", prop_header_bwd);
+	  read(PropRecordXML, "/Propagator/PropSourceBWD", source_header_bwd);
       }
 
       // Sanity check - write out the norm2 of the forward prop in the j_decay direction
@@ -431,8 +434,8 @@ namespace Chroma
 
     // Get the momentum from the header
 
-    multi1d<int> mom_fwd mom_bwd  ;
-    multi1d<int> t_src_fwd t_src_bwd;
+    multi1d<int> mom_fwd, mom_bwd  ;
+    multi1d<int> t_src_fwd, t_src_bwd;
     int       t_dir_fwd = source_header_fwd.j_decay ;
 	  int       t_dir_bwd = source_header_fwd.j_decay ;
 
@@ -541,7 +544,7 @@ namespace Chroma
 		<< " secs" << std::endl;
 
     pop(XmlOut);   // NprVertexPDF
-s
+
     snoop.stop();
     QDPIO::cout << InlineNprVertexPDFRISMOMEnv::name << ": total time = "
 		<< snoop.getTimeInSeconds() 
