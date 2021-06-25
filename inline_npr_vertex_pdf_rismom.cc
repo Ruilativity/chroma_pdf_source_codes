@@ -222,40 +222,6 @@ namespace Chroma
     }
   }
 
-  void write_FT_prop(const LatticePropagator& prop,
-//                     const multi1d<int> mom,
-                     std::string name,int serial)
-  {
-//    multi1d<int> t_src(mom.size());
-//    DPropagator FTprop(FTpropagator2(prop,mom,t_src));
-    DPropagator FTprop(sum(prop));
-  if(Layout::primaryNode())
-  {
-      general_data_base io_prop;
-      sprintf(io_prop.name,"%s",name.c_str());
-	io_prop.add_dimension(dim_conf, 1,&serial);
-	io_prop.add_dimension(dim_temporary, 144);
-	io_prop.add_dimension(dim_complex, 2);
-	io_prop.initialize();
-	
-        SpinMatrixD U = KYToDRMat();
-	FTprop= adj(U) * FTprop * U;
-	
-      int data_index=0;
-      for(int is2=0; is2!=Ns; is2++)
-      for(int ic2=0; ic2!=Nc; ic2++)
-      for(int is1=0; is1!=Ns; is1++)
-      for(int ic1=0; ic1!=Nc; ic1++)
-      {
-		io_prop.data[data_index]=FTprop.elem().elem(is1,is2).elem(ic1,ic2).real();
-		data_index++;
-		io_prop.data[data_index]=FTprop.elem().elem(is1,is2).elem(ic1,ic2).imag();
-		data_index++;
-      }
-      io_prop.save();
-    }
-  
-  }
                      
 
   // Function call
@@ -410,8 +376,8 @@ namespace Chroma
 	pop(XmlOut);
 	
 	  push(XmlOut, "BackwardProp");
-	  write(XmlOut, "PropBWDXML", PropBWDXML);
-	  write(XmlOut, "PropBWDRecordXML", PropBWDRecordXML);
+	  write(XmlOut, "PropBWDXML", PropXML);
+	  write(XmlOut, "PropBWDRecordXML", PropRecordXML);
 	  write(XmlOut, "PropBWDCheck", PropCheckBWD);
 	  pop(XmlOut);
       }

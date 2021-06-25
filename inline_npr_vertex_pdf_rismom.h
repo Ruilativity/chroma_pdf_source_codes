@@ -51,7 +51,9 @@ namespace Chroma
 
     std::string xml_file;  // Alternate XML file pattern
   };
-
+void write_FT_prop(const LatticePropagator& prop,
+//                     const multi1d<int> mom,
+				   std::string name,int serial);
 
   //! Inline measurement of NPR vertices
   /*! \ingroup inlinehadron */
