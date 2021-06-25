@@ -54,7 +54,13 @@ namespace Chroma
 void write_FT_prop(const LatticePropagator& prop,
 //                     const multi1d<int> mom,
 				   std::string name,int serial);
-
+DPropagator FTpropagator2(const LatticePropagator& prop,
+			 const multi1d<int> mom,
+						  const multi1d<int> t_src);
+void read(XMLReader& xml, const std::string& path, InlineNprVertexPDFRISMOMParams::Param_t& input);
+void write(XMLWriter& xml, const std::string& path, const InlineNprVertexPDFRISMOMParams::Param_t& input);
+void read(XMLReader& xml, const std::string& path, InlineNprVertexPDFRISMOMParams::NamedObject_t& input);
+void write(XMLWriter& xml, const std::string& path, const InlineNprVertexPDFRISMOMParams::NamedObject_t& input);
   //! Inline measurement of NPR vertices
   /*! \ingroup inlinehadron */
   class InlineNprVertexPDFRISMOM : public AbsInlineMeasurement

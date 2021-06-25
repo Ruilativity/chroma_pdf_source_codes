@@ -53,87 +53,9 @@ namespace Chroma
     }
   }
 
-  DPropagator FTpropagator2(const LatticePropagator& prop,
-			   const multi1d<int> mom,
-			   const multi1d<int> t_src){
-    // Initialize the slow Fourier transform phases
-    // Makes no sence to do momemtum average here...
-
-    LatticeReal theta=zero;
-    for(int id=0;id<4;id++) 
-        theta+=twopi*Real(mom[id])/Real(Layout::lattSize()[id])* QDP::Layout::latticeCoordinate(id); 
-    LatticeComplex phase=cmplx(cos(theta),sin(theta));
-    return sum(prop*phase);    
-  }
-
-  //! Param input
-  void read(XMLReader& xml, const std::string& path, InlineNprVertexPDFRISMOMParams::Param_t& input)
-  {
-    XMLReader paramtop(xml, path);
-
-    int version;
-    read(paramtop, "version", version);
-
-    if (paramtop.count("FermState") != 0)
-      input.cfs = readXMLGroup(paramtop, "FermState", "Name");
-    else
-      input.cfs = CreateFermStateEnv::nullXMLGroup();
-
-    switch (version) 
-    {
-    case 1:
-      break;
-
-    default :
-      QDPIO::cerr << InlineNprVertexPDFRISMOMEnv::name << ": input parameter version "
-		  << version << " unsupported." << std::endl;
-      QDP_abort(1);
-    }
-    
-    read(paramtop, "links_max", input.links_max);
-    read(paramtop, "file_name", input.file_name);
-    read(paramtop, "save_prop", input.save_prop);
-    read(paramtop, "cfg_serial", input.cfg_serial);
-  }
 
 
-  //! Param write
-  void write(XMLWriter& xml, const std::string& path, const InlineNprVertexPDFRISMOMParams::Param_t& input)
-  {
-    push(xml, path);
 
-    int version = 1;
-    write(xml, "version", version);
-    write(xml, "links_max", input.links_max);
-    write(xml, "file_name", input.file_name);    
-    write(xml, "save_prop", input.save_prop);
-    write(xml, "cfg_serial", input.cfg_serial);  
-    xml << input.cfs.xml;
-
-    pop(xml);
-  }
-
-  //! Propagator input
-  void read(XMLReader& xml, const std::string& path, InlineNprVertexPDFRISMOMParams::NamedObject_t& input)
-  {
-    XMLReader inputtop(xml, path);
-
-    read(inputtop, "gauge_id", input.gauge_id);
-    read(inputtop, "prop_fwd", input.prop_id_fwd);
-	  read(inputtop, "prop_bwd", input.prop_id_bwd);
-  }
-
-  //! Propagator output
-  void write(XMLWriter& xml, const std::string& path, const InlineNprVertexPDFRISMOMParams::NamedObject_t& input)
-  {
-    push(xml, path);
-
-    write(xml, "gauge_id", input.gauge_id);
-    write(xml, "prop_fwd", input.prop_id_fwd);
-	  write(xml, "prop_bwd", input.prop_id_bwd);
-
-    pop(xml);
-  }
 
 
   // Param stuff
