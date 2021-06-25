@@ -13,8 +13,12 @@
 
 namespace Chroma 
 {
-
-  //! NPR vertices
+//! Used to Set Requested Link Patterns
+/*! \ingroup hadron */
+typedef void (*BBLinkPattern)(bool &                          DoThisPattern,
+			  bool &                          DoFurtherPatterns,
+			  multi1d< int > & LinkPattern);
+  //! NPR vertices in RI/SMOM scheme
   /*! \ingroup hadron */
   void NprVertexPDFRISMOM(const LatticePropagator &             F,
 					const LatticePropagator &             B,
