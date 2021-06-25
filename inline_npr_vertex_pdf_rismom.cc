@@ -119,8 +119,8 @@ namespace Chroma
     XMLReader inputtop(xml, path);
 
     read(inputtop, "gauge_id", input.gauge_id);
-    read(inputtop, "prop_fwd", input.prop_fwd);
-	  read(inputtop, "prop_bwd", input.prop_bwd);
+    read(inputtop, "prop_fwd", input.prop_id_fwd);
+	  read(inputtop, "prop_bwd", input.prop_id_bwd);
   }
 
   //! Propagator output
@@ -129,8 +129,8 @@ namespace Chroma
     push(xml, path);
 
     write(xml, "gauge_id", input.gauge_id);
-    write(xml, "prop_fwd", input.prop_fwd);
-	  write(xml, "prop_bwd", input.prop_bwd);
+    write(xml, "prop_fwd", input.prop_id_fwd);
+	  write(xml, "prop_bwd", input.prop_id_bwd);
 
     pop(xml);
   }
@@ -362,23 +362,23 @@ namespace Chroma
     ChromaProp_t prop_header_fwd, prop_header_bwd;
     PropSourceConst_t source_header_fwd, source_header_bwd;
     QDPIO::cout << "Attempt to parse forward propagator" << std::endl;
-    QDPIO::cout << "parsing forward propagator " << params.named_obj.prop_fwd << " ... " << std::endl << std::flush;
+    QDPIO::cout << "parsing forward propagator " << params.named_obj.prop_id_fwd << " ... " << std::endl << std::flush;
 	  QDPIO::cout << "Attempt to parse backward propagator" << std::endl;
-   QDPIO::cout << "parsing backward propagator " << params.named_obj.prop_bwd << " ... " << std::endl << std::flush;
+   QDPIO::cout << "parsing backward propagator " << params.named_obj.prop_id_bwd << " ... " << std::endl << std::flush;
     
 
     try
     {
       // Snarf a copy
-      F = TheNamedObjMap::Instance().getData<LatticePropagator>(params.named_obj.prop_fwd);
-		B = TheNamedObjMap::Instance().getData<LatticePropagator>(params.named_obj.prop_bwd);
+      F = TheNamedObjMap::Instance().getData<LatticePropagator>(params.named_obj.prop_id_fwd);
+		B = TheNamedObjMap::Instance().getData<LatticePropagator>(params.named_obj.prop_id_bwd);
 	
       // Snarf the frwd prop info. This is will throw if the frwd prop id is not there
       XMLReader PropXML1, PropRecordXML1, PropXML2, PropRecordXML2 ;
-      TheNamedObjMap::Instance().get(params.named_obj.prop_fwd).getFileXML(PropXML1);
-      TheNamedObjMap::Instance().get(params.named_obj.prop_fwd).getRecordXML(PropRecordXML1);
-		TheNamedObjMap::Instance().get(params.named_obj.prop_bwd).getFileXML(PropXML2);
-  TheNamedObjMap::Instance().get(params.named_obj.prop_bwd).getRecordXML(PropRecordXML2);
+      TheNamedObjMap::Instance().get(params.named_obj.prop_id_fwd).getFileXML(PropXML1);
+      TheNamedObjMap::Instance().get(params.named_obj.prop_id_fwd).getRecordXML(PropRecordXML1);
+		TheNamedObjMap::Instance().get(params.named_obj.prop_id_bwd).getFileXML(PropXML2);
+  TheNamedObjMap::Instance().get(params.named_obj.prop_id_bwd).getRecordXML(PropRecordXML2);
 
       // Try to invert this record XML into a ChromaProp struct
       {
