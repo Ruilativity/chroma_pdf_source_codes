@@ -108,8 +108,8 @@ namespace Chroma
     XMLReader inputtop(xml, path);
 
     read(inputtop, "gauge_id", input.gauge_id);
-    read(inputtop, "prop_fwd", input.prop_id_fwd);
-	  read(inputtop, "prop_bwd", input.prop_id_bwd);
+    read(inputtop, "prop_id_fwd", input.prop_id_fwd);
+	  read(inputtop, "prop_id_bwd", input.prop_id_bwd);
   }
 
   //! Propagator output
@@ -118,8 +118,8 @@ namespace Chroma
     push(xml, path);
 
     write(xml, "gauge_id", input.gauge_id);
-    write(xml, "prop_fwd", input.prop_id_fwd);
-	  write(xml, "prop_bwd", input.prop_id_bwd);
+    write(xml, "prop_id_fwd", input.prop_id_fwd);
+	  write(xml, "prop_id_bwd", input.prop_id_bwd);
 
     pop(xml);
   }
