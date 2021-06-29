@@ -342,7 +342,7 @@ namespace Chroma
 		  
 	TheNamedObjMap::Instance().get(params.named_obj.prop_id_bwd).getFileXML(PropXML);
 	  TheNamedObjMap::Instance().get(params.named_obj.prop_id_bwd).getRecordXML(PropRecordXML);
-	  read(PropRecordXML, "/Propagator/ForwardProp", prop_header_bwd);
+	  read(PropRecordXML, "/Propagator/BorwardProp", prop_header_bwd);
 	  read(PropRecordXML, "/Propagator/PropSourceBWD", source_header_bwd);
       }
 
