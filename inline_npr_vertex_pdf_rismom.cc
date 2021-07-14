@@ -313,7 +313,7 @@ namespace Chroma
 
     SftMom phases_nomom( 0, true, Nd-1 );  // used to check props. Fix to Nd-1 direction.
 
-    LatticePropagator F,B;
+    LatticePropagator F,B, FB, BF; // FB for S(p,p')
     ChromaProp_t prop_header_fwd, prop_header_bwd;
     PropSourceConst_t source_header_fwd, source_header_bwd;
     QDPIO::cout << "Attempt to parse forward propagator" << std::endl;
@@ -337,13 +337,13 @@ namespace Chroma
   TheNamedObjMap::Instance().get(params.named_obj.prop_id_fwd).getFileXML(PropXML);
   TheNamedObjMap::Instance().get(params.named_obj.prop_id_fwd).getRecordXML(PropRecordXML);
 	read(PropRecordXML, "/Propagator/ForwardProp", prop_header_fwd);
-	read(PropRecordXML, "/Propagator/PropSourceFWD", source_header_fwd);
+	read(PropRecordXML, "/Propagator/PropSource", source_header_fwd);
 
 		  
 	TheNamedObjMap::Instance().get(params.named_obj.prop_id_bwd).getFileXML(PropXML);
 	  TheNamedObjMap::Instance().get(params.named_obj.prop_id_bwd).getRecordXML(PropRecordXML);
-	  read(PropRecordXML, "/Propagator/BorwardProp", prop_header_bwd);
-	  read(PropRecordXML, "/Propagator/PropSourceBWD", source_header_bwd);
+	  read(PropRecordXML, "/Propagator/ForwardProp", prop_header_bwd);
+	  read(PropRecordXML, "/Propagator/PropSource", source_header_bwd);
       }
 
       // Sanity check - write out the norm2 of the forward prop in the j_decay direction
@@ -433,10 +433,12 @@ namespace Chroma
     LatticeComplex phase_fwd=cmplx(cos(theta_fwd),-sin(theta_fwd)), phase_bwd=cmplx(cos(theta_bwd),-sin(theta_bwd));
     F=F*phase_fwd;//project propagator to the given momentum.
 	  B=B*phase_bwd;//project propagator to the given momentum.
+	  FB=F*phase_bwd;//project S(p,z)to S(p,z)e^{-ip'z}
     
-    std::string name_prop_fwd=params.param.file_name+"_fwd.ftp", name_prop_bwd=params.param.file_name+"_bwd.ftp";
+	  std::string name_prop_fwd=params.param.file_name+"_fwd.ftp", name_prop_bwd=params.param.file_name+"_bwd.ftp"; name_prop_mix=params.param.file_name+"_mix.ftp";
     write_FT_prop(F,name_prop_fwd,params.param.cfg_serial);
 	  write_FT_prop(B,name_prop_bwd,params.param.cfg_serial);
+	  write_FT_prop(FB,name_prop_mix,params.param.cfg_serial);
 
 //    LatticeComplex phase2=cmplx(cos(theta),sin(theta));
 //    F=F*phase;
