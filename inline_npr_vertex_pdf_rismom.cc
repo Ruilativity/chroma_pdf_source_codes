@@ -313,7 +313,7 @@ namespace Chroma
 
     SftMom phases_nomom( 0, true, Nd-1 );  // used to check props. Fix to Nd-1 direction.
 
-    LatticePropagator F,B, FB, BF; // FB for S(p,p')
+    LatticePropagator F,B, FB; // FB for S(p,p')
     ChromaProp_t prop_header_fwd, prop_header_bwd;
     PropSourceConst_t source_header_fwd, source_header_bwd;
     QDPIO::cout << "Attempt to parse forward propagator" << std::endl;
